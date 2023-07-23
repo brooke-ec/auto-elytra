@@ -3,7 +3,6 @@ package net.nimajnebec.autoelytra.mixin;
 import com.mojang.authlib.GameProfile;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
-import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.effect.StatusEffects;
@@ -57,6 +56,24 @@ public abstract class ClientPlayerEntityMixin extends AbstractClientPlayerEntity
 
     @Unique private boolean canStartFlying() {
         return !this.isOnGround() && !this.isFallFlying() && !this.isTouchingWater() && !this.hasStatusEffect(StatusEffects.LEVITATION);
+    }
+
+    @Inject(method = "tickMovement()V",at = @At(value = "TAIL"))
+    public void unequipElytra(CallbackInfo ci) {
+        if (previousChestItemNbt != null && !this.isFallFlying() && this.getEquippedStack(EquipmentSlot.CHEST).isOf(Items.ELYTRA)) {
+            List<ItemStack> inventory = this.getCombinedInventory();
+
+            // Find previous item
+            for (int slot = 0; slot < inventory.size(); slot++) {
+                if (inventory.get(slot).getOrCreateNbt().equals(previousChestItemNbt)) {
+                    this.swapSlots(slot, chestSlot);
+                    break;
+                }
+            }
+
+            // Null previous item
+            this.previousChestItemNbt = null;
+        }
     }
 
     @Unique public void swapSlots(int slotA, int slotB) {
