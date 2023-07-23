@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "id": "autoelytra",
+  "version": "${version}",
+  "name": "Auto Elytra",
+  "description": "A mod that automatically equips your elytra when you try to fly.",
+  "authors": [
+    "NimajnebEC"
+  ],
+  "contact": {
+    "repo": "https://github.com/NimajnebEC/AutoElytra"
+  },
+  "license": "MIT",
+  "icon": "assets/autoelytra/icon.png",
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      "net.nimajnebec.autoelytra.client.AutoElytraClient"
+    ]
+  },
+  "mixins": [
+    "autoelytra.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "minecraft": "${minecraft_version}"
+  }
+}
