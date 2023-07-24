@@ -46,7 +46,8 @@ public abstract class ClientPlayerEntityMixin extends AbstractClientPlayerEntity
                 ItemStack stack = inventory.get(slot);
 
                 if (stack.isOf(Items.ELYTRA)) {
-                    this.previousChestItemNbt = inventory.get(chestSlot).getOrCreateNbt();
+                    ItemStack current = inventory.get(chestSlot);
+                    if (!current.isEmpty()) this.previousChestItemNbt = current.getOrCreateNbt();
                     this.swapSlots(slot, chestSlot);
                     return;
                 }
