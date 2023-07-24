@@ -12,6 +12,7 @@ import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.screen.slot.SlotActionType;
 import net.minecraft.util.collection.DefaultedList;
+import net.nimajnebec.autoelytra.AutoElytra;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -26,7 +27,6 @@ import java.util.List;
 @Mixin(targets = "net.minecraft.client.network.ClientPlayerEntity")
 public abstract class ClientPlayerEntityMixin extends AbstractClientPlayerEntity {
     @Unique private static final int chestSlot = EquipmentSlot.CHEST.getOffsetEntitySlotId(PlayerInventory.MAIN_SIZE);
-    @Unique private NbtCompound previousChestItemNbt;
     @Shadow @Final protected MinecraftClient client;
 
     public ClientPlayerEntityMixin(ClientWorld world, GameProfile profile) {
@@ -47,7 +47,7 @@ public abstract class ClientPlayerEntityMixin extends AbstractClientPlayerEntity
 
                 if (stack.isOf(Items.ELYTRA)) {
                     ItemStack current = inventory.get(chestSlot);
-                    if (!current.isEmpty()) this.previousChestItemNbt = current.getOrCreateNbt();
+                    if (!current.isEmpty()) AutoElytra.getInstance().setPreviousChestItemNbt(current.getOrCreateNbt());
                     this.swapSlots(slot, chestSlot);
                     return;
                 }
@@ -60,20 +60,21 @@ public abstract class ClientPlayerEntityMixin extends AbstractClientPlayerEntity
     }
 
     @Inject(method = "tickMovement()V",at = @At(value = "TAIL"))
-    public void unequipElytra(CallbackInfo ci) {
+    private void unequipElytra(CallbackInfo ci) {
+        AutoElytra plugin = AutoElytra.getInstance();
+        final NbtCompound previousChestItemNbt = plugin.getPreviousChestItemNbt();
+
         if (previousChestItemNbt != null && !this.isFallFlying() && this.getEquippedStack(EquipmentSlot.CHEST).isOf(Items.ELYTRA)) {
-            List<ItemStack> inventory = this.getCombinedInventory();
+            plugin.setPreviousChestItemNbt(null);  // Null previous item
 
             // Find previous item
+            List<ItemStack> inventory = this.getCombinedInventory();
             for (int slot = 0; slot < inventory.size(); slot++) {
                 if (inventory.get(slot).getOrCreateNbt().equals(previousChestItemNbt)) {
                     this.swapSlots(slot, chestSlot);
                     break;
                 }
             }
-
-            // Null previous item
-            this.previousChestItemNbt = null;
         }
     }
 
