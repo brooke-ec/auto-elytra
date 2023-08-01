@@ -3,6 +3,7 @@ package net.nimajnebec.autoelytra.mixin;
 import com.mojang.authlib.GameProfile;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
+import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.effect.StatusEffects;
@@ -24,7 +25,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import java.util.ArrayList;
 import java.util.List;
 
-@Mixin(targets = "net.minecraft.client.network.ClientPlayerEntity")
+@Mixin(value = ClientPlayerEntity.class)
 public abstract class ClientPlayerEntityMixin extends AbstractClientPlayerEntity {
     @Unique private static final int chestSlot = EquipmentSlot.CHEST.getOffsetEntitySlotId(PlayerInventory.MAIN_SIZE);
     @Shadow @Final protected MinecraftClient client;
