@@ -12,6 +12,7 @@ import net.minecraft.world.inventory.ClickType;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.nimajnebec.autoelytra.AutoElytra;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -46,7 +47,7 @@ public class LocalPlayerMixin extends AbstractClientPlayer {
                 ItemStack stack = inventory.get(slot);
 
                 if (stack.is(Items.ELYTRA)) {
-                    ItemStack current = inventory.get(CHEST_SLOT);
+                    AutoElytra.setPreviousChestItem(inventory.get(CHEST_SLOT));
                     this.autoelytra$swapSlots(slot, CHEST_SLOT);
                     return;
                 }
@@ -56,6 +57,25 @@ public class LocalPlayerMixin extends AbstractClientPlayer {
 
     @Unique private boolean autoelytra$canStartFlying() {
         return !this.onGround() && !this.isFallFlying() && !this.isInWater() && !this.hasEffect(MobEffects.LEVITATION);
+    }
+
+    @Inject(method = "aiStep", at = @At(value = "TAIL"))
+    private void unequipElytra(CallbackInfo ci) {
+        List<ItemStack> inventory = this.autoelytra$getCombinedInventory();
+
+        // Check if just stopped flying
+        if (AutoElytra.hasPreviousChestItem() && !this.isFallFlying() && inventory.get(CHEST_SLOT).is(Items.ELYTRA)) {
+
+            // Find previous chest item
+            for (int slot = 0; slot < inventory.size(); slot++) {
+                if (AutoElytra.equalsPreviousChestItem(inventory.get(slot))) {
+                    this.autoelytra$swapSlots(slot, CHEST_SLOT);
+                    break;
+                }
+            }
+
+            AutoElytra.resetPreviousChestItem();
+        }
     }
 
     @Unique private void autoelytra$swapSlots(int slotA, int slotB) {

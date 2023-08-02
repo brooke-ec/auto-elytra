@@ -6,7 +6,5 @@ import net.nimajnebec.autoelytra.AutoElytra;
 @Mod(AutoElytra.MOD_ID)
 public class AutoElytraForge {
 
-    public AutoElytraForge() {
-        AutoElytra.init();
-    }
+    public AutoElytraForge() {}
 }
