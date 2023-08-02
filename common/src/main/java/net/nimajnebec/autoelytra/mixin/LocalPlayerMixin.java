@@ -68,7 +68,7 @@ public class LocalPlayerMixin extends AbstractClientPlayer {
 
             // Find previous chest item
             for (int slot = 0; slot < inventory.size(); slot++) {
-                if (AutoElytra.equalsPreviousChestItem(inventory.get(slot))) {
+                if (AutoElytra.matchesPreviousChestItem(inventory.get(slot))) {
                     this.autoelytra$swapSlots(slot, CHEST_SLOT);
                     break;
                 }
