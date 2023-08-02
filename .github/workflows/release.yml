@@ -29,4 +29,4 @@ jobs:
       - name: Upload Assets to Release
         uses: softprops/action-gh-release@v0.1.15
         with:
-          files: build/libs/*[!-sources].jar
+          files: build/libs/merged/*.jar
