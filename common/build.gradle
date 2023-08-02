@@ -8,6 +8,10 @@ architectury {
     common(project.enabled_platforms.split(","))
 }
 
+loom {
+    accessWidenerPath = file("src/main/resources/autoelytra.accesswidener")
+}
+
 publishing {
     publications {
         mavenCommon(MavenPublication) {
