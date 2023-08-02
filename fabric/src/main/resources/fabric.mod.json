@@ -17,7 +17,7 @@
   "environment": "*",
   "entrypoints": {
     "client": [
-      "net.nimajnebec.autoelytraarchitectury.fabric.AutoElytraFabric"
+      "net.nimajnebec.autoelytra.fabric.AutoElytraFabric"
     ]
   },
   "depends": {

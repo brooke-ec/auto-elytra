@@ -1,4 +1,4 @@
-package net.nimajnebec.autoelytraarchitectury;
+package net.nimajnebec.autoelytra;
 
 public class AutoElytra
 {
