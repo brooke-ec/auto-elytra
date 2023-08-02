@@ -1,6 +1,7 @@
 plugins {
     id "architectury-plugin" version "3.4-SNAPSHOT"
-    id "dev.architectury.loom" version "1.1-SNAPSHOT" apply false
+    id "io.github.pacifistmc.forgix" version "1.2.6"
+    id "dev.architectury.loom" version "1.2-SNAPSHOT" apply false
 }
 
 architectury {
@@ -48,4 +49,12 @@ allprojects {
     java {
         withSourcesJar()
     }
+
+    forgix {
+        mergedJarName = "%s-%s.jar".formatted(rootProject.archives_base_name, rootProject.mod_version)
+        group = rootProject.maven_group
+        outputDir = "build/libs/merged"
+    }
+
+    tasks.named("build") { finalizedBy(mergeJars) }
 }
