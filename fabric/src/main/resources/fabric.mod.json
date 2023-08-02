@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "id": "autoelytra",
+  "version": "${version}",
+
+  "name": "Auto Elytra",
+  "description": "A client side mod that automatically switches your elytra and chestplate when you go to fly.",
+  "authors": ["NimajnebEC"],
+  "contact": {
+    "sources": "https://github.com/NimajnebEC/auto-elytra",
+    "issues": "https://github.com/NimajnebEC/auto-elytra/issues"
+  },
+
+  "license": "MIT",
+  "icon": "icon.png",
+
+  "environment": "*",
+  "entrypoints": {
+    "client": [
+      "net.nimajnebec.autoelytraarchitectury.fabric.AutoElytraFabric"
+    ]
+  },
+  "depends": {
+    "fabricloader": ">=0.14.21",
+    "minecraft": ">=1.20.1"
+  }
+}

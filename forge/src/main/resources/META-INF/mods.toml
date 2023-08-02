@@ -1,0 +1,33 @@
+modLoader="javafml"
+loaderVersion="[47,)"
+license="MIT"
+issueTrackerURL="https://github.com/NimajnebEC/auto-elytra/issues"
+
+[[mods]]
+modId="autoelytra"
+version="${version}"
+displayName="Auto Elytra"
+logoFile="icon.png"
+authors="NimajnebEC"
+displayTest="IGNORE_ALL_VERSION"
+displayURL="https://github.com/NimajnebEC/auto-elytra"
+
+description='''
+A client side mod that automatically switches your elytra and chestplate when you go to fly.
+'''
+
+
+[[dependencies.autoelytra]]
+   modId="forge"
+   mandatory=true
+   versionRange="[47,)"
+   ordering="NONE"
+   side="BOTH"
+
+
+[[dependencies.autoelytra]]
+   modId="minecraft"
+   mandatory=true
+   versionRange="[1.20.1,1.21)"
+   ordering="NONE"
+   side="BOTH"
