@@ -10,7 +10,7 @@ public class AutoElytraForge {
 
     public AutoElytraForge() {
         ModFileInfo info = FMLLoader.getLoadingModList().getModFileById(AutoElytra.MOD_ID);
-        AutoElytra.sendEnabledMessage(info.moduleName(), info.versionString(), "forge");
+        AutoElytra.initialise(info.moduleName(), info.versionString(), "forge");
     }
 
 }
