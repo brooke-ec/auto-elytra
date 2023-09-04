@@ -12,7 +12,8 @@ import net.minecraft.world.inventory.ClickType;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.nimajnebec.autoelytra.AutoElytra;
+import net.nimajnebec.autoelytra.config.Configuration;
+import net.nimajnebec.autoelytra.feature.AutoEquipController;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -36,6 +37,8 @@ public class LocalPlayerMixin extends AbstractClientPlayer {
 
     @Inject(method = "aiStep", at = @At(value = "INVOKE", shift = At.Shift.BEFORE, target = "Lnet/minecraft/client/player/LocalPlayer;getItemBySlot(Lnet/minecraft/world/entity/EquipmentSlot;)Lnet/minecraft/world/item/ItemStack;"))
     private void tryEquipElytra(CallbackInfo ci) {
+        if (!Configuration.AUTO_EQUIP_ENABLED.get()) return;
+
         if (this.autoelytra$canStartFlying()) {
             List<ItemStack> inventory = this.autoelytra$getCombinedInventory();
 
@@ -47,7 +50,7 @@ public class LocalPlayerMixin extends AbstractClientPlayer {
                 ItemStack stack = inventory.get(slot);
 
                 if (stack.is(Items.ELYTRA)) {
-                    AutoElytra.setPreviousChestItem(inventory.get(CHEST_SLOT));
+                    AutoEquipController.setPreviousChestItem(inventory.get(CHEST_SLOT));
                     this.autoelytra$swapSlots(slot, CHEST_SLOT);
                     return;
                 }
@@ -61,20 +64,22 @@ public class LocalPlayerMixin extends AbstractClientPlayer {
 
     @Inject(method = "aiStep", at = @At(value = "TAIL"))
     private void unequipElytra(CallbackInfo ci) {
+        if (!Configuration.AUTO_EQUIP_ENABLED.get()) return;
+
         List<ItemStack> inventory = this.autoelytra$getCombinedInventory();
 
         // Check if just stopped flying
-        if (AutoElytra.hasPreviousChestItem() && !this.isFallFlying() && inventory.get(CHEST_SLOT).is(Items.ELYTRA)) {
+        if (AutoEquipController.hasPreviousChestItem() && !this.isFallFlying() && inventory.get(CHEST_SLOT).is(Items.ELYTRA)) {
 
             // Find previous chest item
             for (int slot = 0; slot < inventory.size(); slot++) {
-                if (AutoElytra.matchesPreviousChestItem(inventory.get(slot))) {
+                if (AutoEquipController.matchesPreviousChestItem(inventory.get(slot))) {
                     this.autoelytra$swapSlots(slot, CHEST_SLOT);
                     break;
                 }
             }
 
-            AutoElytra.resetPreviousChestItem();
+            AutoEquipController.resetPreviousChestItem();
         }
     }
 

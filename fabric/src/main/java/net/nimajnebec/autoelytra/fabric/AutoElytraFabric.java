@@ -16,6 +16,6 @@ public class AutoElytraFabric implements ClientModInitializer {
         assert modContainer.isPresent();
 
         ModMetadata metadata = modContainer.get().getMetadata();
-        AutoElytra.sendEnabledMessage(metadata.getName(), metadata.getVersion().getFriendlyString(), "fabric");
+        AutoElytra.initialise(metadata.getName(), metadata.getVersion().getFriendlyString(), "fabric");
     }
 }

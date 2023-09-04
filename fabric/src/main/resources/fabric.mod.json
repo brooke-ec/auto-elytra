@@ -16,12 +16,18 @@
 
   "environment": "client",
   "entrypoints": {
-    "client": [ "net.nimajnebec.autoelytra.fabric.AutoElytraFabric" ]
+    "client": [ "net.nimajnebec.autoelytra.fabric.AutoElytraFabric" ],
+    "modmenu": [ "net.nimajnebec.autoelytra.fabric.ModMenuIntegration" ]
   },
   "mixins": [ "autoelytra.mixins.json" ],
 
   "depends": {
     "fabricloader": ">=0.14.21",
-    "minecraft": ">=1.20.1"
+    "minecraft": ">=1.20.1",
+    "fabric": "*"
+  },
+
+  "suggests": {
+    "cloth-config": "*"
   }
 }

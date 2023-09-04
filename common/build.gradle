@@ -2,6 +2,11 @@ dependencies {
     // We depend on fabric loader here to use the fabric @Environment annotations and get the mixin dependencies
     // Do NOT use other classes from fabric loader
     modImplementation "net.fabricmc:fabric-loader:${rootProject.fabric_loader_version}"
+
+    // Depend of cloth config so we can make the screen common
+    modApi("me.shedaniel.cloth:cloth-config-fabric:${rootProject.cloth_config_version}") {
+        exclude(group: "net.fabricmc.fabric-api")
+    }
 }
 
 architectury {
