@@ -1,4 +1,6 @@
 {
+  "modmenu.descriptionTranslation.autoelytra": "A client side mod that automatically switches your elytra and chestplate when you go to fly.",
+
   "title.autoelytra.config": "Auto Elytra Configuration",
 
   "option.autoelytra.equip.enabled": "Auto Equip Enabled",
