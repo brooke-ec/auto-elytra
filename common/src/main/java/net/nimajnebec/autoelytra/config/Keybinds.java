@@ -7,7 +7,7 @@ import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.nimajnebec.autoelytra.AutoElytra;
-import net.nimajnebec.autoelytra.features.AutoEquipController;
+import net.nimajnebec.autoelytra.feature.AutoEquipController;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -15,7 +15,7 @@ import java.util.Map;
 public class Keybinds {
     protected static final Map<KeyMapping, Runnable> KEYBINDS = new HashMap<>();
     public static final KeyMapping TOGGLE_AUTO_EQUIP = registerKeybind(
-            new KeyMapping("key.autoelytra.toggle.equip", InputConstants.Type.KEYSYM, -1, "key.categories.inventory"),
+            new KeyMapping("key.autoelytra.toggle.equip", InputConstants.Type.KEYSYM, -1, KeyMapping.CATEGORY_INVENTORY),
             () -> {
                 if (Minecraft.getInstance().screen != null) return; // Only allow when no screen is open
 

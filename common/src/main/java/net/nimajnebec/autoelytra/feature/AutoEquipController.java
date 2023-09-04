@@ -1,4 +1,4 @@
-package net.nimajnebec.autoelytra.features;
+package net.nimajnebec.autoelytra.feature;
 
 import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;

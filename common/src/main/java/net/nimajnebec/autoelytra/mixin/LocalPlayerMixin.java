@@ -13,7 +13,7 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.nimajnebec.autoelytra.config.Configuration;
-import net.nimajnebec.autoelytra.features.AutoEquipController;
+import net.nimajnebec.autoelytra.feature.AutoEquipController;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;

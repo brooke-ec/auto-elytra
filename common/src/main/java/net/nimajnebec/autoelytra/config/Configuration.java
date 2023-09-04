@@ -18,7 +18,7 @@ public class Configuration {
     public static Screen createScreen(Screen parent)  {
         /* AutoElytra uses cloth config to generate configs screens
         If the cloth config dependency is not found do not attempt to generate the screen. */
-        if (!Configuration.ClothConfigInstalled()) return null;;
+        if (!Configuration.ClothConfigInstalled()) return null;
         return ClothConfigFactory.create(parent);
     }
 
