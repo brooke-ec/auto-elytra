@@ -19,6 +19,7 @@ public class AutoElytra
 
 	public static void sendMessage(Component component) {
         if (client.player == null) return;
-        client.player.displayClientMessage(component, false);
+        Component message = Component.literal("[AutoElytra] ").append(component);
+        client.player.displayClientMessage(message, false);
 	}
 }

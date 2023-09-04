@@ -16,7 +16,8 @@
 
   "environment": "client",
   "entrypoints": {
-    "client": [ "net.nimajnebec.autoelytra.fabric.AutoElytraFabric" ]
+    "client": [ "net.nimajnebec.autoelytra.fabric.AutoElytraFabric" ],
+    "modmenu": [ "net.nimajnebec.autoelytra.fabric.ModMenuIntegration" ]
   },
   "mixins": [ "autoelytra.mixins.json" ],
 

@@ -1,3 +1,12 @@
 {
-  "key.autoelytra.toggle.equip": "Toggle Auto Elytra Swap"
+  "title.autoelytra.config": "Auto Elytra Configuration",
+
+  "option.autoelytra.equip.enabled": "Auto Equip Enabled",
+  "toolip.autoelytra.equip.enabled": "Weather the elytra auto equip functionality is enabled.",
+
+  "key.autoelytra.toggle.equip": "Toggle Auto Elytra Swap",
+  "tooltip.autoelytra.toggle.equip": "The keybind used to toggle elytra auto equip.",
+
+  "message.autoelytra.equip.enabled": "Elytra auto equip enabled ",
+  "message.autoelytra.equip.disabled": "Elytra auto equip disabled"
 }

@@ -6,7 +6,6 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.MutableComponent;
 import net.nimajnebec.autoelytra.features.AutoEquipController;
 
 import java.util.HashMap;
@@ -22,12 +21,12 @@ public class Keybinds {
             boolean enabling = !Configuration.isAutoEquipEnabled();
 
             Configuration.setAutoEquipEnabled(enabling);
-            MutableComponent message = Component.literal("Auto Elytra Equip is Now ");
 
+            Component message;
             if (enabling) {
                 AutoEquipController.resetPreviousChestItem();
-                message.append(Component.literal("Enabled").withStyle(ChatFormatting.GREEN));
-            } else message.append(Component.literal("Disabled").withStyle(ChatFormatting.RED));
+                message = Component.translatable("message.autoelytra.equip.enabled").withStyle(ChatFormatting.GREEN);
+            } else message = Component.translatable("message.autoelytra.equip.disabled").withStyle(ChatFormatting.RED);
 
             AutoElytra.sendMessage(message);
     });
