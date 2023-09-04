@@ -4,7 +4,6 @@ import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.minecraft.client.gui.screens.Screen;
 
 public class Configuration {
-    public static final String CLOTH_MODID = "cloth-config";
     private static boolean autoEquipEnabled = true;
 
     public static void setAutoEquipEnabled(boolean value) {
