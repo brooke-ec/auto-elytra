@@ -6,6 +6,7 @@ import net.minecraft.network.chat.Component;
 public class ClothConfigFactory {
     public static Screen create(Screen parent) {
         var builder = me.shedaniel.clothconfig2.api.ConfigBuilder.create()
+                .setSavingRunnable(Configuration::save)
                 .setTitle(Component.translatable("title.autoelytra.config"))
                 .setParentScreen(parent);
 
@@ -14,9 +15,9 @@ public class ClothConfigFactory {
 
         // Auto Equip Enabled
         general.addEntry(entryBuilder.startBooleanToggle(
-                        Component.translatable("option.autoelytra.equip.enabled"), Configuration.isAutoEquipEnabled())
+                        Component.translatable("option.autoelytra.equip.enabled"), Configuration.AUTO_EQUIP_ENABLED.get())
                 .setTooltip(Component.translatable("toolip.autoelytra.equip.enabled"))
-                .setSaveConsumer(Configuration::setAutoEquipEnabled)
+                .setSaveConsumer(Configuration.AUTO_EQUIP_ENABLED::set)
                 .build());
 
         // Auto Equip Toggle Keybind

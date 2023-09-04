@@ -19,9 +19,9 @@ public class Keybinds {
             () -> {
                 if (Minecraft.getInstance().screen != null) return; // Only allow when no screen is open
 
-                boolean enabling = !Configuration.isAutoEquipEnabled();
+                boolean enabling = !Configuration.AUTO_EQUIP_ENABLED.get();
 
-                Configuration.setAutoEquipEnabled(enabling);
+                Configuration.AUTO_EQUIP_ENABLED.set(enabling);
 
                 Component message;
                 if (enabling) {
@@ -30,6 +30,7 @@ public class Keybinds {
                 } else message = Component.translatable("message.autoelytra.equip.disabled").withStyle(ChatFormatting.RED);
 
                 AutoElytra.sendMessage(message);
+                Configuration.save();
             });
 
     private static KeyMapping registerKeybind(KeyMapping mapping, Runnable action) {

@@ -37,7 +37,7 @@ public class LocalPlayerMixin extends AbstractClientPlayer {
 
     @Inject(method = "aiStep", at = @At(value = "INVOKE", shift = At.Shift.BEFORE, target = "Lnet/minecraft/client/player/LocalPlayer;getItemBySlot(Lnet/minecraft/world/entity/EquipmentSlot;)Lnet/minecraft/world/item/ItemStack;"))
     private void tryEquipElytra(CallbackInfo ci) {
-        if (!Configuration.isAutoEquipEnabled()) return;
+        if (!Configuration.AUTO_EQUIP_ENABLED.get()) return;
 
         if (this.autoelytra$canStartFlying()) {
             List<ItemStack> inventory = this.autoelytra$getCombinedInventory();
@@ -64,7 +64,7 @@ public class LocalPlayerMixin extends AbstractClientPlayer {
 
     @Inject(method = "aiStep", at = @At(value = "TAIL"))
     private void unequipElytra(CallbackInfo ci) {
-        if (!Configuration.isAutoEquipEnabled()) return;
+        if (!Configuration.AUTO_EQUIP_ENABLED.get()) return;
 
         List<ItemStack> inventory = this.autoelytra$getCombinedInventory();
 
