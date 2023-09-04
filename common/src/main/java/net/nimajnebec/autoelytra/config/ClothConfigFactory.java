@@ -17,6 +17,7 @@ public class ClothConfigFactory {
         general.addEntry(entryBuilder.startBooleanToggle(
                         Component.translatable("option.autoelytra.equip.enabled"), Configuration.AUTO_EQUIP_ENABLED.get())
                 .setTooltip(Component.translatable("toolip.autoelytra.equip.enabled"))
+                .setDefaultValue(Configuration.AUTO_EQUIP_ENABLED.getDefault())
                 .setSaveConsumer(Configuration.AUTO_EQUIP_ENABLED::set)
                 .build());
 

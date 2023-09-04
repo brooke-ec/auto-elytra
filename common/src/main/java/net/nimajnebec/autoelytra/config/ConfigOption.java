@@ -25,4 +25,8 @@ public class ConfigOption<T> {
         this.value = value;
     }
 
+    public T getDefault() {
+        return defaultValue;
+    }
+
 }
