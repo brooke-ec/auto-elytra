@@ -4,6 +4,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Inventory;
+import net.nimajnebec.autoelytra.config.Keybinds;
 import org.slf4j.LoggerFactory;
 
 public class AutoElytra

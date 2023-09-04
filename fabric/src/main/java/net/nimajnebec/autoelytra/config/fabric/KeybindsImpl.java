@@ -1,10 +1,10 @@
-package net.nimajnebec.autoelytra.fabric;
+package net.nimajnebec.autoelytra.config.fabric;
 
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
-import net.nimajnebec.autoelytra.Keybinds;
+import net.nimajnebec.autoelytra.config.Keybinds;
 
 import java.util.Map;
 

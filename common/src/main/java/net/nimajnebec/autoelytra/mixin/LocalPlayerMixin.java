@@ -12,7 +12,7 @@ import net.minecraft.world.inventory.ClickType;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.nimajnebec.autoelytra.Configuration;
+import net.nimajnebec.autoelytra.config.Configuration;
 import net.nimajnebec.autoelytra.features.AutoEquipController;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;

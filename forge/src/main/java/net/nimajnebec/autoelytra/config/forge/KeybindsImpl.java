@@ -1,4 +1,4 @@
-package net.nimajnebec.autoelytra.forge;
+package net.nimajnebec.autoelytra.config.forge;
 
 import net.minecraft.client.KeyMapping;
 import net.minecraftforge.client.event.InputEvent;
@@ -6,7 +6,7 @@ import net.minecraftforge.client.event.RegisterKeyMappingsEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
-import net.nimajnebec.autoelytra.Keybinds;
+import net.nimajnebec.autoelytra.config.Keybinds;
 
 import java.util.Map;
 
