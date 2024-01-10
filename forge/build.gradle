@@ -24,7 +24,7 @@ configurations {
 }
 
 dependencies {
-    forge "net.minecraftforge:forge:${rootProject.forge_version}"
+    forge "net.minecraftforge:forge:${rootProject.minecraft_version}-${rootProject.forge_version}"
 
     api "me.shedaniel.cloth:cloth-config-forge:${rootProject.cloth_config_version}"
 
