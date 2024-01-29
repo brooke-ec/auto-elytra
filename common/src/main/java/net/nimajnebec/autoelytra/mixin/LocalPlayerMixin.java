@@ -51,7 +51,7 @@ public class LocalPlayerMixin extends AbstractClientPlayer {
 
                 if (stack.is(Items.ELYTRA)) {
                     AutoEquipController.setPreviousChestItem(inventory.get(CHEST_SLOT));
-                    this.autoelytra$swapSlots(slot, CHEST_SLOT);
+                    this.autoelytra$swapSlots(CHEST_SLOT, slot);
                     return;
                 }
             }
@@ -74,7 +74,7 @@ public class LocalPlayerMixin extends AbstractClientPlayer {
             // Find previous chest item
             for (int slot = 0; slot < inventory.size(); slot++) {
                 if (AutoEquipController.matchesPreviousChestItem(inventory.get(slot))) {
-                    this.autoelytra$swapSlots(slot, CHEST_SLOT);
+                    this.autoelytra$swapSlots(CHEST_SLOT, slot);
                     break;
                 }
             }
@@ -86,8 +86,8 @@ public class LocalPlayerMixin extends AbstractClientPlayer {
     @Unique private void autoelytra$swapSlots(int slotA, int slotB) {
 
         // Convert inventory slot to menu slot
-        int slotAMenu = -1;
         NonNullList<Slot> slots = this.inventoryMenu.slots;
+        int slotAMenu = -1;
         for (int i = 5; i < slots.size(); i++) {  // Start at 5 to skip crafting grid
             if (slots.get(i).getContainerSlot() == slotA) {
                 slotAMenu = i;
