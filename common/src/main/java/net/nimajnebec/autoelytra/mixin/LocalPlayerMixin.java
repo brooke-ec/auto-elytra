@@ -88,16 +88,21 @@ public class LocalPlayerMixin extends AbstractClientPlayer {
         // Convert inventory slot to menu slot
         NonNullList<Slot> slots = this.inventoryMenu.slots;
         int slotAMenu = -1;
+        int slotBMenu = -1;
         for (int i = 5; i < slots.size(); i++) {  // Start at 5 to skip crafting grid
-            if (slots.get(i).getContainerSlot() == slotA) {
-                slotAMenu = i;
-                break;
-            }
+            if (slots.get(i).getContainerSlot() == slotA) slotAMenu = i;
+            if (slots.get(i).getContainerSlot() == slotB) slotBMenu = i;
+            if (slotAMenu > -1 && slotBMenu > -1) break;
         }
 
         assert slotAMenu > -1;
+        assert slotBMenu > -1;
         assert this.minecraft.gameMode != null;
-        this.minecraft.gameMode.handleInventoryMouseClick(this.inventoryMenu.containerId, slotAMenu, slotB, ClickType.SWAP, this);
+
+        // Swap using ClickType.PICKUP as ClickType.SWAP only works in hotbar since 1.20.4: https://github.com/NimajnebEC/auto-elytra/issues/10
+        this.minecraft.gameMode.handleInventoryMouseClick(this.inventoryMenu.containerId, slotAMenu, 0, ClickType.PICKUP, this);
+        this.minecraft.gameMode.handleInventoryMouseClick(this.inventoryMenu.containerId, slotBMenu, 0, ClickType.PICKUP, this);
+        this.minecraft.gameMode.handleInventoryMouseClick(this.inventoryMenu.containerId, slotAMenu, 0, ClickType.PICKUP, this);
     }
 
     @Unique private List<ItemStack> autoelytra$getCombinedInventory() {
