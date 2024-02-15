@@ -10,6 +10,7 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.ClickType;
 import net.minecraft.world.inventory.Slot;
+import net.minecraft.world.item.ElytraItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.nimajnebec.autoelytra.config.Configuration;
@@ -50,13 +51,13 @@ public class LocalPlayerMixin extends AbstractClientPlayer {
             List<ItemStack> inventory = this.autoelytra$getCombinedInventory();
 
             // Return if elytra is already equipped
-            if (inventory.get(CHEST_SLOT).is(Items.ELYTRA)) return;
+            if (inventory.get(CHEST_SLOT).getItem() instanceof ElytraItem) return;
 
             // Find elytra in inventory
             for (int slot = 0; slot < inventory.size(); slot++) {
                 ItemStack stack = inventory.get(slot);
 
-                if (stack.is(Items.ELYTRA)) {
+                if (stack.getItem() instanceof ElytraItem) {
                     AutoEquipController.setPreviousChestItem(inventory.get(CHEST_SLOT));
                     this.autoelytra$swapSlots(CHEST_SLOT, slot);
                     return;
@@ -76,7 +77,7 @@ public class LocalPlayerMixin extends AbstractClientPlayer {
         List<ItemStack> inventory = this.autoelytra$getCombinedInventory();
 
         // Check if just stopped flying
-        if (AutoEquipController.hasPreviousChestItem() && !this.isFallFlying() && inventory.get(CHEST_SLOT).is(Items.ELYTRA)) {
+        if (AutoEquipController.hasPreviousChestItem() && !this.isFallFlying() && inventory.get(CHEST_SLOT).getItem() instanceof ElytraItem) {
 
             // Find previous chest item
             for (int slot = 0; slot < inventory.size(); slot++) {
