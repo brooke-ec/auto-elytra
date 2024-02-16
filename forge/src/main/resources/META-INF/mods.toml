@@ -1,6 +1,6 @@
 modLoader="javafml"
 issueTrackerURL="https://github.com/NimajnebEC/auto-elytra/issues"
-loaderVersion="[47,)"
+loaderVersion="[46,)"
 license="MIT"
 
 [[mods]]
@@ -21,7 +21,7 @@ A client side mod that automatically switches your elytra and chestplate when yo
 [[dependencies.autoelytra]]
    modId="forge"
    mandatory=true
-   versionRange="[47,)"
+   versionRange="[46,)"
    ordering="NONE"
    side="BOTH"
 
@@ -29,6 +29,6 @@ A client side mod that automatically switches your elytra and chestplate when yo
 [[dependencies.autoelytra]]
    modId="minecraft"
    mandatory=true
-   versionRange="1.20.4"
+   versionRange="[1.20,1.21)"
    ordering="NONE"
    side="BOTH"
