@@ -1,54 +1,47 @@
 package net.nimajnebec.autoelytra.feature;
 
-import com.mojang.brigadier.StringReader;
-import com.mojang.brigadier.exceptions.CommandSyntaxException;
-import net.minecraft.commands.arguments.NbtPathArgument;
-import net.minecraft.nbt.CompoundTag;
+import net.minecraft.core.component.DataComponentMap;
+import net.minecraft.core.component.DataComponentType;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 public class AutoEquipController {
-    private static final NbtPathArgument.NbtPath[] BLACKLISTED_TAGS = parseTagPaths("tag.Damage"); // List of tags to ignore when searching for previous chest item
+    private static final Set<DataComponentType<?>> BLACKLISTED_COMPONENTS = new HashSet<>(List.of(DataComponents.DAMAGE));
     @Nullable
-    private static CompoundTag previousChestTag;
+    private static DataComponentMap previousChestDataComponents;
 
     public static void setPreviousChestItem(ItemStack item) {
-        if (!item.isEmpty()) previousChestTag = getFilteredTag(item);
+        if (!item.isEmpty()) previousChestDataComponents = item.getComponents();
     }
 
     public static boolean hasPreviousChestItem() {
-        return previousChestTag != null;
+        return previousChestDataComponents != null;
     }
 
     public static void resetPreviousChestItem() {
-        previousChestTag = null;
+        previousChestDataComponents = null;
     }
 
     public static boolean matchesPreviousChestItem(ItemStack item) {
-        return !item.isEmpty() && getFilteredTag(item).equals(previousChestTag);
-    }
+        Set<DataComponentType<?>> components = item.getComponents().keySet();
 
-    private static CompoundTag getFilteredTag(ItemStack itemStack) {
-        CompoundTag tag = itemStack.save(new CompoundTag());
+        boolean matches = true;
 
-        // Remove all blacklisted tags
-        for (NbtPathArgument.NbtPath path : BLACKLISTED_TAGS) {
-            path.remove(tag);
-        }
+        if (previousChestDataComponents == null || components.isEmpty()) return false;
 
-        return tag;
-    }
-
-    private static NbtPathArgument.NbtPath[] parseTagPaths(String... args) {
-        NbtPathArgument.NbtPath[] result = new NbtPathArgument.NbtPath[args.length];
-        for (int i = 0; i < args.length; i++) {
-            try {
-                // Use data command's path parser for blacklist
-                result[i] = NbtPathArgument.nbtPath().parse(new StringReader(args[i]));
-            } catch (CommandSyntaxException e) {
-                throw new RuntimeException(e);
+        for (DataComponentType<?> type : components) {
+            if (!BLACKLISTED_COMPONENTS.contains(type)) {
+                if (item.getComponents().get(type) != previousChestDataComponents.get(type)) {
+                    matches = false;
+                }
             }
         }
-        return result;
+
+        return matches;
     }
 }
