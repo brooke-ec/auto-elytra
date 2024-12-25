@@ -65,7 +65,7 @@ public class LocalPlayerMixin extends AbstractClientPlayer {
                     // Use EnchantmentHelper#getLevel and get the Enchantment from the dynamic registry manager of the clients world
 
                     int effectiveDurability = stack.getMaxDamage() - stack.getDamageValue();
-                    if (bestElytra == null || effectiveDurability > bestElytra.getDamageValue()) {
+                    if (bestElytra == null || effectiveDurability > (bestElytra.getMaxDamage() - bestElytra.getDamageValue())) {
                         bestElytra = stack;
                         finalSlot = slot;
                     }
