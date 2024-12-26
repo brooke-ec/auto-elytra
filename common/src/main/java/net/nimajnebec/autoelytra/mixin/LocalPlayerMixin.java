@@ -6,13 +6,13 @@ import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.ClickType;
 import net.minecraft.world.inventory.Slot;
-import net.minecraft.world.item.ElytraItem;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.nimajnebec.autoelytra.config.Configuration;
 import net.nimajnebec.autoelytra.feature.AutoEquipController;
 import org.spongepowered.asm.mixin.Final;
@@ -43,7 +43,7 @@ public class LocalPlayerMixin extends AbstractClientPlayer {
         return onClimbable() || isInLava();
     }
 
-    @Inject(method = "aiStep", at = @At(value = "INVOKE", shift = At.Shift.BEFORE, target = "Lnet/minecraft/client/player/LocalPlayer;getItemBySlot(Lnet/minecraft/world/entity/EquipmentSlot;)Lnet/minecraft/world/item/ItemStack;"))
+    @Inject(method = "aiStep", at = @At(value = "INVOKE", shift = At.Shift.BEFORE, target = "Lnet/minecraft/client/player/LocalPlayer;tryToStartFallFlying()Z"))
     private void tryEquipElytra(CallbackInfo ci) {
         if (!Configuration.AUTO_EQUIP_ENABLED.get()) return;
 
@@ -51,18 +51,31 @@ public class LocalPlayerMixin extends AbstractClientPlayer {
             List<ItemStack> inventory = this.autoelytra$getCombinedInventory();
 
             // Return if elytra is already equipped
-            if (inventory.get(CHEST_SLOT).getItem() instanceof ElytraItem) return;
+            if (this.getItemBySlot(EquipmentSlot.CHEST).has(DataComponents.GLIDER)) return;
 
-            // Find elytra in inventory
+            ItemStack bestElytra = null;
+            int finalSlot = 0;
+
+            // Find best elytra in inventory
             for (int slot = 0; slot < inventory.size(); slot++) {
                 ItemStack stack = inventory.get(slot);
 
-                if (stack.getItem() instanceof ElytraItem) {
-                    AutoEquipController.setPreviousChestItem(inventory.get(CHEST_SLOT));
-                    this.autoelytra$swapSlots(CHEST_SLOT, slot);
-                    return;
+                if (stack.has(DataComponents.GLIDER)) {
+                    // TODO Implement calculating effective durability with unbreaking (multiply by unbreaking level)
+                    // Use EnchantmentHelper#getLevel and get the Enchantment from the dynamic registry manager of the clients world
+
+                    int effectiveDurability = stack.getMaxDamage() - stack.getDamageValue();
+                    if (bestElytra == null || effectiveDurability > (bestElytra.getMaxDamage() - bestElytra.getDamageValue())) {
+                        bestElytra = stack;
+                        finalSlot = slot;
+                    }
                 }
             }
+
+            if (bestElytra == null) return;
+
+            AutoEquipController.setPreviousChestItem(this.getItemBySlot(EquipmentSlot.CHEST));
+            this.autoelytra$swapSlots(CHEST_SLOT, finalSlot);
         }
     }
 
@@ -77,7 +90,7 @@ public class LocalPlayerMixin extends AbstractClientPlayer {
         List<ItemStack> inventory = this.autoelytra$getCombinedInventory();
 
         // Check if just stopped flying
-        if (AutoEquipController.hasPreviousChestItem() && !this.isFallFlying() && inventory.get(CHEST_SLOT).getItem() instanceof ElytraItem) {
+        if (AutoEquipController.hasPreviousChestItem() && !this.isFallFlying() && this.getItemBySlot(EquipmentSlot.CHEST).has(DataComponents.GLIDER)) {
 
             // Find previous chest item
             for (int slot = 0; slot < inventory.size(); slot++) {
